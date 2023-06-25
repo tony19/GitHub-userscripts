@@ -1,16 +1,16 @@
 // ==UserScript==
 // @name         GitHub Projects with Repo Links
 // @namespace    https://github.com/tony19
-// @version      0.2.0
+// @version      0.2.1
 // @description  Linkifies repo names in GitHub project boards
 // @author       Tony Trinh <tony19@gmail.com>
 // @match        https://github.com/orgs/*/projects/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=github.com
 // @grant        none
 // @run-at       document-idle
-// @updateURL   https://raw.githubusercontent.com/tony19/Github-userscripts/main/github-project-repo-links.user.js
-// @downloadURL https://raw.githubusercontent.com/tony19/Github-userscripts/main/github-project-repo-links.user.js
-// @supportURL  https://github.com/tony19/GitHub-userscripts/issues
+// @updateURL    https://raw.githubusercontent.com/tony19/Github-userscripts/main/github-project-repo-links.user.js
+// @downloadURL  https://raw.githubusercontent.com/tony19/Github-userscripts/main/github-project-repo-links.user.js
+// @supportURL   https://github.com/tony19/GitHub-userscripts/issues
 // ==/UserScript==
 
 ;(() => {
@@ -20,19 +20,24 @@
 
   // linkify repo names in card headers
   const cardHeaders = [
-    ...document.querySelectorAll('[data-testid="board-card-header"] span'),
-  ].filter(x => x.className.includes('Text'))
+    ...document.querySelectorAll('[data-testid="board-card-header"]'),
+  ]
   cardHeaders.forEach(header => {
-    const repoName = header.childNodes[0].textContent
-    const baseUri = header.baseURI.split('/projects').at(0).replace('/orgs', '')
+    if (header.querySelector('[aria-label="Draft issue"]')) {
+      return
+    }
+
+    const span = header.querySelector('span[class*="Text"]')
+    const repoName = span.childNodes[0].textContent
+    const baseUri = span.baseURI.split('/projects').at(0).replace('/orgs', '')
     const repoLink = `${baseUri}/${repoName}`
     const anchor = document.createElement('a')
     anchor.href = repoLink
     anchor.textContent = repoName
 
     // remove the first child node, which is the repo name, and replace it with a link to the repo
-    header.childNodes[0].remove()
-    header.prepend(anchor)
+    span.childNodes[0].remove()
+    span.prepend(anchor)
 
     repos[repoName] = repoLink
   })
