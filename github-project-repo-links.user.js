@@ -8,6 +8,9 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=github.com
 // @grant        none
 // @run-at       document-idle
+// @updateURL   https://raw.githubusercontent.com/tony19/Github-userscripts/main/github-project-repo-links.user.js
+// @downloadURL https://raw.githubusercontent.com/tony19/Github-userscripts/main/github-project-repo-links.user.js
+// @supportURL  https://github.com/tony19/GitHub-userscripts/issues
 // ==/UserScript==
 
 ;(() => {
