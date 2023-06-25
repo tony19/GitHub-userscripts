@@ -7,6 +7,7 @@
 // @match        https://github.com/orgs/*/projects/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=github.com
 // @grant        none
+// @run-at       document-idle
 // ==/UserScript==
 
 ;(() => {
